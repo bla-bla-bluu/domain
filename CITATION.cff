@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the following paper."
+title: "Thermal Pedestrian Detection in Wilderness Environments: Self-Training on Pseudo-Labels Outperforms Scale Augmentation and Generative Domain Adaptation"
+authors:
+  - family-names: Dhillon
+    given-names: Deepak
+  - family-names: Sharma
+    given-names: Manoj
+  - family-names: Kumar
+    given-names: Dinesh
+year: 2026

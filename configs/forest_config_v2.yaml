@@ -1,0 +1,6 @@
+# YOLOv8 config — CycleGAN v2 (synthetic forest images)
+path: /home/deepak/domain/yolo_synthetic_v2
+train: train/images
+val: val/images
+names:
+  0: person

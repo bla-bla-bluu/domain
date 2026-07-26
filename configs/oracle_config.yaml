@@ -1,0 +1,6 @@
+# YOLOv8 config — supervised real-label reference model ("oracle"; real labeled IR data)
+path: /home/deepak/domain/yolo_ir_oracle
+train: train/images
+val: val/images
+names:
+  0: person

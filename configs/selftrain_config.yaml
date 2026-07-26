@@ -1,0 +1,7 @@
+# YOLOv8 config — self-training (real forest frames pseudo-labeled by baseline+SAHI at
+# conf=0.45; same 5,604-frame pool as CycleGAN v2, for a matched-data comparison)
+path: /home/deepak/domain/yolo_selftrain
+train: train/images
+val: val/images
+names:
+  0: person
