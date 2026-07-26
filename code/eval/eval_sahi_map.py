@@ -1,18 +1,11 @@
 #!/usr/bin/env python3
-"""
-mAP50 for SAHI sliced-inference conditions on the 150-frame Golden Test Set.
-
-eval_sahi.py only reports TP/FP/FN at a single confidence threshold (0.15).
-Standard-mode mAP50 is available via ultralytics' own .val() (PR-sweep built in),
-but ultralytics has no notion of SAHI tiling, so SAHI mAP50 needs a bespoke sweep:
-run SAHI at a near-zero confidence floor to keep the full score range, pool all
-detections across all 150 images, then compute single-class AP@IoU=0.5 with the
-same 101-point-interpolation method ultralytics uses (metrics.py: compute_ap),
-so the number is on the same footing as the standard-mode mAP50 already reported.
+"""mAP50 for SAHI sliced-inference conditions on the 150-frame forest test set.
+ultralytics' .val() cannot tile, so SAHI mAP50 is computed by running SAHI at a near-zero
+confidence floor, pooling detections across all frames, and computing single-class AP@0.5
+with the same 101-point interpolation as ultralytics.
 
 Usage:
-  python eval_sahi_map.py --model <path/to/best.pt> --slice 320 --overlap 0.2
-"""
+  python eval_sahi_map.py --model <best.pt> --slice 320 --overlap 0.2"""
 import os, argparse, glob
 import numpy as np
 from PIL import Image

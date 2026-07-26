@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
-"""De-leak setup: split the 150-frame Golden Test Set (Clip 3) into a temporally
-disjoint VAL (earliest 50) and TEST (latest 100), and write ultralytics data yamls.
-VAL is used for best.pt checkpoint selection during retraining; TEST is held out for
-final evaluation only. This removes the test-set-as-validation leakage for checkpoint
-selection. Nothing existing is modified: all outputs go under ~/domain/deleaked/."""
+"""Split the 150-frame test set into a temporally disjoint validation set (earliest 50) and
+test set (latest 100) and write the ultralytics data configs. The validation set is used for
+checkpoint selection; the test set is held out for final evaluation."""
 import os, shutil
 
 ROOT = "/home/deepak/domain"

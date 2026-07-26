@@ -1,11 +1,6 @@
-"""
-Generate results figures for main.tex from the Table III / Table IV numbers.
-Categorical color mapping is fixed per entity across all figures (never reassigned
-per-chart): Baseline=blue, CycleGAN v1=aqua, CycleGAN v2=yellow, Oracle=green
-(palette slots 1-4 of the validated default categorical theme). Hatch patterns and
-distinct markers/linestyles are layered on top of color so the figures remain
-legible in grayscale print.
-"""
+"""Generate the results-comparison and tile-size-sweep figures from the reported numbers.
+Colors are fixed per model across figures; hatch patterns and distinct markers keep the charts
+legible in grayscale."""
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt

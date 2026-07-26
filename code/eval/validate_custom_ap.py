@@ -1,9 +1,5 @@
-"""
-Validate eval_sahi_map.py's custom AP implementation against ultralytics' trusted
-.val() computation, by running the SAME global-sort + 101-point-interpolation
-algorithm on STANDARD (non-SAHI) detections -- the one case where both pipelines
-can compute mAP50 for the same predictions, so they should agree.
-"""
+"""Cross-check: compute standard-inference mAP50 with both the custom AP pipeline and
+ultralytics' .val() on the same model, and report the difference."""
 import glob, os
 import numpy as np
 from PIL import Image

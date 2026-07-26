@@ -27,7 +27,7 @@ code/
                 validate_custom_ap.py/_ap2.py – custom-vs-ultralytics AP cross-checks
   figures/      make_figures.py               – results_comparison + tile_size_sweep figures
   experiments/  deleak_setup.py, deleak_run.py    – de-leaked validation split (paper §5.4)
-                item3_decompose.py, item3_probe.py – SAHI-mAP50 pipeline-discrepancy analysis (§5.1)
+                map_pipeline_analysis.py, map_pipeline_probe.py – SAHI-mAP50 pipeline-discrepancy analysis (§5.1)
 configs/        *.yaml                         – Ultralytics data configs (per condition)
 ```
 

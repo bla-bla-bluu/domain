@@ -1,10 +1,5 @@
-"""
-Second validation pass: instead of reimplementing inference (which may not exactly
-match ultralytics' own preprocessing/letterboxing/NMS pipeline), hook ultralytics'
-own validator to capture the exact per-image predictions it uses internally, then
-run only the custom AP math on those. This isolates "is the AP formula correct"
-from "does the custom inference pipeline match ultralytics'".
-"""
+"""Cross-check: run the custom AP math on ultralytics' own validator output, isolating the
+AP formula from the inference pipeline."""
 import numpy as np
 from ultralytics import YOLO
 from eval_sahi_map import compute_ap

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-"""Train YOLOv8-Nano on the self-training pseudo-labeled dataset (see generate_pseudo_labels.py).
-Identical hyperparameters to the CycleGAN v2 and oracle runs (same architecture and detector
-hyperparameters; only the training-data source differs)."""
+"""Train YOLOv8-Nano on the self-training pseudo-labeled dataset. Hyperparameters match the
+CycleGAN v2 and oracle runs; only the training-data source differs."""
 from ultralytics import YOLO
 
 if __name__ == "__main__":

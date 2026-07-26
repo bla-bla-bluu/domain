@@ -1,31 +1,10 @@
 #!/usr/bin/env python3
-"""
-Standard-mode (non-SAHI) TP/FP/FN using ultralytics' OWN validator pipeline end to end:
-its dataloader (rect=True letterbox), its inference, its NMS, and its ConfusionMatrix
-matching -- with the matching IoU threshold forced to 0.5 to match this paper's stated
-IoU@0.5 methodology (ultralytics hardcodes 0.45 for confusion-matrix matching regardless
-of the `iou=` argument passed to .val(), which only controls NMS; verified by reading
-ultralytics.models.yolo.detect.val.DetectionValidator's call to
-confusion_matrix.process_batch(predn, pbatch, conf=self.args.conf) -- no iou_thres passed).
-
-Uses the high-level `model.val(...)` API (NOT a manually-constructed DetectionValidator --
-an earlier version of this script did that and gave numbers inconsistent with model.val()'s
-own aggregate P/R printout, most likely because model.val() does additional setup, e.g.
-layer fusion, that a bare DetectionValidator(args=...) call skips; model.val() is treated
-as ground truth here since it is the officially documented, public entry point). Runs with
-batch=1 so each validation "batch" is exactly one image, and a callback reads the confusion
-matrix's cumulative total before/after each image to recover that image's own TP/FP/FN --
-giving frame-level granularity for bootstrap resampling while reusing ultralytics' real
-preprocessing/inference/matching rather than a hand-rolled loop. Cross-checked: summed
-per-image counts equal r.confusion_matrix.matrix exactly, and P/R match ultralytics' own
-printed aggregate metrics to 3 decimal places.
-
-Supersedes eval_sahi.py's --no_sahi mode for baseline/v2/oracle (v1 has no available
-weights on this workstation, so it retains its previously-measured custom-pipeline numbers).
+"""Standard-mode TP/FP/FN via ultralytics' own validator (its dataloader, inference, NMS,
+and ConfusionMatrix matching), with the matching IoU forced to 0.5. Runs with batch=1 and a
+per-batch callback so per-image counts are available for bootstrap resampling.
 
 Usage:
-  python eval_ultralytics_native.py --model <path/to/best.pt> --conf 0.15 --bootstrap
-"""
+  python eval_ultralytics_native.py --model <best.pt> --conf 0.15 --bootstrap"""
 import argparse
 import numpy as np
 from ultralytics import YOLO

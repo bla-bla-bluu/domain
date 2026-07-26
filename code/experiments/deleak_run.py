@@ -1,15 +1,8 @@
 #!/usr/bin/env python3
-"""De-leaked retrain + evaluation. (Guarded under __main__ so ultralytics dataloader
-worker processes do not re-execute the orchestration.)
-1. Retrain self-train / oracle / v2 selecting best.pt on the VAL-50 split (never TEST).
-2. Evaluate, on the held-out TEST-100 split, each model's ORIGINAL (test-selected) best.pt
-   vs its DE-LEAKED (VAL-selected) best.pt, plus the LLVIP baseline. Same TEST set both
-   ways, so the mAP50 delta isolates the checkpoint-selection leakage.
-3. Anchor: also evaluate the original checkpoints on the full 150 frames to reproduce the
-   paper's reported mAP50.
-Identical hyperparameters to the paper (epochs=50, imgsz=640, batch=0.75, patience=20).
-Outputs under ~/domain/deleaked/; nothing existing is modified.
-"""
+"""De-leaked retrain and evaluation. Retrains the self-train, oracle, and CycleGAN v2 models
+selecting the checkpoint on a validation split, then evaluates each model's original vs.
+de-leaked checkpoint on a held-out test split; an anchor pass on the full 150 frames
+reproduces the reported mAP50. Hyperparameters match the main runs."""
 import os, json, time, traceback
 
 ROOT = "/home/deepak/domain"

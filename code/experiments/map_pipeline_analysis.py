@@ -1,17 +1,8 @@
 #!/usr/bin/env python3
-"""Item 3: decompose the standard-mode custom-pipeline vs ultralytics mAP50 gap, and
-compute a properly-calibrated SAHI-mode mAP50 using ultralytics' OWN matching rule.
-
-Factors that differ between the custom pipeline and ultralytics .val():
-  (1) rect letterbox        : .val() default rect=True (minimal pad) vs per-image square 640
-  (2) detection generation  : predict() loop vs .val() dataloader (beyond rect)
-  (3) TP/FP matcher         : custom = confidence-order greedy;
-                              ultralytics = IoU-sorted greedy w/ uniqueness (match_predictions)
-The AP integration (compute_ap, 101-pt) is identical and already verified.
-
-Strategy: hold the AP integration fixed (compute_ap on a global conf-sorted PR curve) and
-swap ONLY the matcher, applied to the SAME detections, for standard-predict and for SAHI.
-Anchor with ultralytics .val(rect=True/False)."""
+"""Decompose the standard-mode custom-pipeline vs. ultralytics mAP50 gap into (1) rect
+letterbox, (2) detection generation, and (3) TP/FP matcher, and compute SAHI-mode mAP50 under
+both the custom and ultralytics matching rules. The AP integration is held fixed; only the
+matcher is swapped, applied to the same detections."""
 import os, sys, glob, json, time
 import numpy as np
 from PIL import Image
@@ -21,7 +12,7 @@ from eval_sahi_map import parse_gt, norm_to_xyxy, iou_xyxy, compute_ap
 ROOT = "/home/deepak/domain"
 VAL_IMG = f"{ROOT}/data/yolo_val/images"
 VAL_LBL = f"{ROOT}/data/yolo_val/labels"
-OUT = f"{ROOT}/deleaked/item3_result.json"
+OUT = f"{ROOT}/deleaked/map_pipeline_result.json"
 MODELS = {
     "baseline": f"{ROOT}/weights/baseline_best.pt",
     "selftrain": f"{ROOT}/runs/SelfTrain/weights/best.pt",
@@ -45,7 +36,7 @@ def ap_from_tp(scores, tp, total):
     return compute_ap(rec, prec) * 100
 
 def matcher_custom(dets, gtpi, total, t=0.5):
-    """confidence-order greedy (the paper's custom pipeline)."""
+    """confidence-order greedy matcher."""
     d = sorted(dets, key=lambda x: x[0], reverse=True)
     claimed = [np.zeros(len(g), bool) for g in gtpi]
     scores, tp = [], []
@@ -132,7 +123,7 @@ def main():
         result[mname] = r
     json.dump(result, open(OUT, "w"), indent=2)
     print("\nWROTE", OUT, flush=True)
-    print("ITEM3_SENTINEL_COMPLETE", flush=True)
+    print("ANALYSIS_COMPLETE", flush=True)
 
 if __name__ == "__main__":
     main()

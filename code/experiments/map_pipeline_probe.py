@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Pin down the residual 3.5pp (val rect=False 27.3 vs predict 23.8) for the baseline.
-Test half-precision and the predict input shape, holding matcher fixed (custom==ult, proven)."""
+"""Isolate the residual detection-generation gap (validator rect=False vs. per-image predict)
+for the baseline by testing half precision and the predict input shape, with the matcher fixed."""
 import os, sys, glob
 import numpy as np
 from PIL import Image

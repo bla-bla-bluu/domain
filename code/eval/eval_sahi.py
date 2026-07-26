@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-"""
-SAHI sliced inference evaluation on the 150-frame Golden Test Set.
-Usage:
-  python eval_sahi.py --model <path/to/best.pt> [--conf 0.15] [--slice 320]
-  python eval_sahi.py --model <path/to/best.pt> --no_sahi --conf 0.25
+"""SAHI (or standard) inference evaluation on the 150-frame forest test set.
 
-Prints TP, FP, FN, Precision, Recall, F1 across all 150 frames.
-"""
+Usage:
+  python eval_sahi.py --model <best.pt> [--conf 0.15] [--slice 320]
+  python eval_sahi.py --model <best.pt> --no_sahi --conf 0.25
+
+Reports TP, FP, FN, precision, recall, and F1."""
 import os, argparse, glob
 import numpy as np
 from PIL import Image
